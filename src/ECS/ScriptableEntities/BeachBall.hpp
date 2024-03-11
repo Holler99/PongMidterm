@@ -37,6 +37,10 @@ public:
         auto& rectLeftPaddle = leftPaddle.GetComponent<RectTransformComponent>(); //could also use auto&
         auto& colorLeftPaddle = leftPaddle.GetComponent<ColorComponent>();
 
+        Entity rightPaddle = entity.GetEntityWithTag("RIGHTPADDLE");
+        auto& rectRightPaddle = rightPaddle.GetComponent<RectTransformComponent>();
+        auto& colorRightPaddle = rightPaddle.GetComponent<ColorComponent>();
+
         Log(std::to_string(rectLeftPaddle.position.y));
 
         auto& rect = GetComponent<Canis::RectTransformComponent>(); //the ball
