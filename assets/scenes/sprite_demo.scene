@@ -44,18 +44,33 @@ Entities:
     Canis::ColorComponent:
       color: [1.0, 1.0, 1.0, 1.0]
     Canis::Sprite2DComponent:
-      uv: [0.16, 0.0, 0.16, 0.24]
-      texture: "assets/textures/All.png"
-    Canis::SpriteAnimationComponent:
-      animationId: "assets/animations/character.anim"
-      countDown: 0.0
-      index: 0
-      flipX: false
-      flipY: false
-      speed: 1.0
+      uv: [0.0, 0.0, 1.0, 1.0]
+      texture: "assets/textures/box.png"
     Canis::CircleColliderComponent:
       center: [0.0, 0.0]
       radius: 128.0
       layer: 0
       mask: 0
     Canis::ScriptComponent: BeachBall
+  - 3:
+    Canis::RectTransformComponent:
+      active: true
+      anchor: 6
+      position: [-625.0, 0.0]
+      size: [30.0, 90.0]
+      originOffset: [0.0, 0.0]
+      rotation: 0
+      scale: 1.0
+      depth: 0.1
+    Canis::ColorComponent:
+      color: [1.0, 1.0, 1.0, 1.0]
+    Canis::Sprite2DComponent:
+      uv: [0.0, 0.0, 1.0, 1.0]
+      texture: "assets/textures/box.png"
+    Canis::CircleColliderComponent:
+      center: [0.0, 0.0]
+      radius: 128.0
+      layer: 0
+      mask: 0
+    Canis::ScriptComponent: Paddle
+    Canis::TagComponent: LEFTPADDLE

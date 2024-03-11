@@ -32,7 +32,14 @@ public:
 
     void OnUpdate(float _dt)
     {
-        auto& rect = GetComponent<Canis::RectTransformComponent>();
+        using namespace Canis;
+        Entity leftPaddle = entity.GetEntityWithTag("LEFTPADDLE");
+        auto& rectLeftPaddle = leftPaddle.GetComponent<RectTransformComponent>(); //could also use auto&
+        auto& colorLeftPaddle = leftPaddle.GetComponent<ColorComponent>();
+
+        Log(std::to_string(rectLeftPaddle.position.y));
+
+        auto& rect = GetComponent<Canis::RectTransformComponent>(); //the ball
 
         float halfSizeX = rect.size.x/2.0f;
         float halfSizeY = rect.size.y/2.0f;
@@ -56,6 +63,14 @@ public:
         if (GetInputManager().JustPressedKey(SDLK_d))
         {
             GetScene().Instantiate("assets/prefebs/test_character.scene");
+        }
+        if (GetInputManager().GetKey(SDL_SCANCODE_W))
+        {
+            Canis::Log("DOWN");
+        }
+        else
+        {
+            Canis::Log("UP");
         }
     }
 };
