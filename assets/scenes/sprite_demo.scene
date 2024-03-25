@@ -24,19 +24,39 @@ Entities:
       scale: 1.0
       depth: 0.1
     Canis::ColorComponent:
-      color: [0.0, 1.0, 1.0, 1.0]
+      color: [255.0, 255.0, 255.0, 255.0]
     Canis::TextComponent:
       assetId:
         path: "assets/fonts/Antonio-Bold.ttf"
         size: 48
-      text: Sprite Demo
+      text: "P1 Score: 0"
       alignment: 0
+    Canis::TagComponent: LEFTSCORE
   - 2:
     Canis::RectTransformComponent:
       active: true
       anchor: 6
+      position: [1050.0, 30.0]
+      size: [0.0, 0.0]
+      originOffset: [0.0, 0.0]
+      rotation: 0.0
+      scale: 1.0
+      depth: 0.1
+    Canis::ColorComponent:
+      color: [255.0, 255.0, 255.0, 255.0]
+    Canis::TextComponent:
+      assetId:
+        path: "assets/fonts/Antonio-Bold.ttf"
+        size: 48
+      text: "P2 Score: 0"
+      alignment: 0
+    Canis::TagComponent: RIGHTSCORE
+  - 3:
+    Canis::RectTransformComponent:
+      active: true
+      anchor: 6
       position: [0.0, 0.0]
-      size: [480.0, 500.0]
+      size: [50.0, 50.0]
       originOffset: [0.0, 0.0]
       rotation: 0
       scale: 1.0
@@ -52,7 +72,8 @@ Entities:
       layer: 0
       mask: 0
     Canis::ScriptComponent: BeachBall
-  - 3:
+    Canis::TagComponent: BALL
+  - 4:
     Canis::RectTransformComponent:
       active: true
       anchor: 6
@@ -63,7 +84,7 @@ Entities:
       scale: 1.0
       depth: 0.1
     Canis::ColorComponent:
-      color: [1.0, 1.0, 1.0, 1.0]
+      color: [1.0, 1.0, 255.0, 1.0]
     Canis::Sprite2DComponent:
       uv: [0.0, 0.0, 1.0, 1.0]
       texture: "assets/textures/box.png"
@@ -74,7 +95,7 @@ Entities:
       mask: 0
     Canis::ScriptComponent: Paddle
     Canis::TagComponent: LEFTPADDLE
-  - 4:
+  - 5:
     Canis::RectTransformComponent:
       active: true
       anchor: 6
@@ -85,7 +106,7 @@ Entities:
       scale: 1.0
       depth: 0.1
     Canis::ColorComponent:
-      color: [1.0, 1.0, 1.0, 1.0]
+      color: [1.0, 255.0, 1.0, 1.0]
     Canis::Sprite2DComponent:
       uv: [0.0, 0.0, 1.0, 1.0]
       texture: "assets/textures/box.png"

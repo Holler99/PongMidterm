@@ -4,6 +4,7 @@
 #include <Canis/ScriptableEntity.hpp>
 #include <Canis/ECS/Components/RectTransformComponent.hpp>
 
+
 class BeachBall : public Canis::ScriptableEntity
 {
 private:
@@ -13,6 +14,7 @@ private:
     float       m_countDown = 0.0f;
     unsigned int m_animIndex = 0;
     std::vector<glm::vec2> m_spawnPoints = {};
+    bool m_gameStarted = false;
 public:
     void OnCreate()
     {
@@ -36,18 +38,49 @@ public:
         Entity leftPaddle = entity.GetEntityWithTag("LEFTPADDLE");
         auto& rectLeftPaddle = leftPaddle.GetComponent<RectTransformComponent>(); //could also use auto&
         auto& colorLeftPaddle = leftPaddle.GetComponent<ColorComponent>();
+        float leftPaddleSpeed = 200.0f;
+        
 
         Entity rightPaddle = entity.GetEntityWithTag("RIGHTPADDLE");
         auto& rectRightPaddle = rightPaddle.GetComponent<RectTransformComponent>();
         auto& colorRightPaddle = rightPaddle.GetComponent<ColorComponent>();
-
-        Log(std::to_string(rectLeftPaddle.position.y));
+        float rightPaddleSpeed = 200.0f;
 
         auto& rect = GetComponent<Canis::RectTransformComponent>(); //the ball
+        
+        if(!m_gameStarted)
+        {
+            if (GetInputManager().GetKey(SDL_SCANCODE_RETURN))
+            {
+                m_gameStarted = true;
+                Log("Game Started!");
+            } 
+            else
+            {
+                return;
+            }
+        }
 
         float halfSizeX = rect.size.x/2.0f;
         float halfSizeY = rect.size.y/2.0f;
+        
+        // left paddle collision
+        if (rect.position.x - halfSizeX <= rectLeftPaddle.position.x + rectLeftPaddle.size.x / 2.0f &&
+            rect.position.y >= rectLeftPaddle.position.y - rectLeftPaddle.size.y / 2.0f &&
+            rect.position.y <= rectLeftPaddle.position.y + rectLeftPaddle.size.y / 2.0f)
+        {
+            m_direction.x *= -1.0f; 
+        }
 
+        //right paddle collision
+         if (rect.position.x + halfSizeX >= rectRightPaddle.position.x - rectRightPaddle.size.x / 2.0f &&
+             rect.position.y >= rectRightPaddle.position.y - rectRightPaddle.size.y / 2.0f &&
+             rect.position.y <= rectRightPaddle.position.y + rectRightPaddle.size.y / 2.0f)
+        {
+            m_direction.x *= -1.0f; 
+        }
+
+        //top and bottom wall collision
         if (rect.position.x + halfSizeX >= GetWindow().GetScreenWidth()/2.0f ||
                 rect.position.x - halfSizeX <= GetWindow().GetScreenWidth()/-2.0f)
             m_direction.x *= -1.0f;
@@ -56,25 +89,28 @@ public:
                 rect.position.y - halfSizeY <= GetWindow().GetScreenHeight()/-2.0f)
             m_direction.y *= -1.0f;
         
+        //ball movement
         rect.position += (m_direction * (m_speed * _dt));
+        
 
-        if (GetInputManager().JustPressedKey(SDLK_p))
-            m_speed += 50.0f;
-        
-        if (GetInputManager().JustPressedKey(SDLK_r))
-            m_speed = 150.0f;
-        
-        if (GetInputManager().JustPressedKey(SDLK_d))
-        {
-            GetScene().Instantiate("assets/prefebs/test_character.scene");
-        }
         if (GetInputManager().GetKey(SDL_SCANCODE_W))
         {
-            Canis::Log("DOWN");
+            rectLeftPaddle.position.y += leftPaddleSpeed * _dt;
         }
-        else
+        
+        if (GetInputManager().GetKey(SDL_SCANCODE_S))
         {
-            Canis::Log("UP");
+            rectLeftPaddle.position.y -= leftPaddleSpeed * _dt;
+        }
+
+        if(GetInputManager().GetKey(SDL_SCANCODE_UP))
+        {
+            rectRightPaddle.position.y += rightPaddleSpeed * _dt;
+        }
+
+        if(GetInputManager().GetKey(SDL_SCANCODE_DOWN))
+        {
+            rectRightPaddle.position.y -= rightPaddleSpeed * _dt;
         }
     }
 };
