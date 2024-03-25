@@ -117,3 +117,19 @@ Entities:
       mask: 0
     Canis::ScriptComponent: Paddle
     Canis::TagComponent: RIGHTPADDLE
+  - 6:
+    Canis::RectTransformComponent:
+      active: true
+      anchor: 6
+      position: [0.0, 0.0]
+      size: [1250.0, 1000.0]
+      originOffset: [0.0, 0.0]
+      rotation: 0.0
+      scale: 1.0
+      depth: 0.1
+    Canis::ColorComponent:
+      color: [1.0, 1.0, 1.0, 1.0]
+    Canis::Sprite2DComponent:
+      uv: [0.0, 0.0, 1.0, 1.0]
+      texture: "assets/textures/moving_background.jpg"
+    Canis::TagComponent: BACKGROUND

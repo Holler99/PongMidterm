@@ -3,6 +3,7 @@
 #include <vector>
 #include <Canis/ScriptableEntity.hpp>
 #include <Canis/ECS/Components/RectTransformComponent.hpp>
+#include <Canis/ECS/Components/TextComponent.hpp>
 
 
 class BeachBall : public Canis::ScriptableEntity
@@ -15,6 +16,8 @@ private:
     unsigned int m_animIndex = 0;
     std::vector<glm::vec2> m_spawnPoints = {};
     bool m_gameStarted = false;
+    int player1Score = 0;
+    int player2Score = 0;
 public:
     void OnCreate()
     {
@@ -46,6 +49,14 @@ public:
         auto& colorRightPaddle = rightPaddle.GetComponent<ColorComponent>();
         float rightPaddleSpeed = 200.0f;
 
+        Entity p1Score = entity.GetEntityWithTag("LEFTSCORE");
+        auto& p1Text = p1Score.GetComponent<TextComponent>();
+        
+
+        Entity p2Score = entity.GetEntityWithTag("RIGHTSCORE");
+        auto& p2Text = p2Score.GetComponent<TextComponent>();
+        
+
         auto& rect = GetComponent<Canis::RectTransformComponent>(); //the ball
         
         if(!m_gameStarted)
@@ -70,6 +81,7 @@ public:
             rect.position.y <= rectLeftPaddle.position.y + rectLeftPaddle.size.y / 2.0f)
         {
             m_direction.x *= -1.0f; 
+            GetComponent<ColorComponent>().color = colorLeftPaddle.color;
         }
 
         //right paddle collision
@@ -78,7 +90,25 @@ public:
              rect.position.y <= rectRightPaddle.position.y + rectRightPaddle.size.y / 2.0f)
         {
             m_direction.x *= -1.0f; 
+            GetComponent<ColorComponent>().color = colorRightPaddle.color;
         }
+
+        if (rect.position.x + halfSizeX >= GetWindow().GetScreenWidth() / 2.0f)
+        {
+            // Update player 1 score
+            player1Score++;
+            p1Text.text = "P1 Score: " + std::to_string(player1Score);
+
+        }
+
+        if (rect.position.x - halfSizeX <= GetWindow().GetScreenWidth() / -2.0f)
+        {
+            // Update player 2 score
+            player2Score++;
+            p2Text.text = "P2 Score: " + std::to_string(player2Score);
+
+        }
+
 
         //top and bottom wall collision
         if (rect.position.x + halfSizeX >= GetWindow().GetScreenWidth()/2.0f ||
